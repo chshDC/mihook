@@ -1,30 +1,19 @@
 package com.wahaha.mihook;
 
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.Environment;
-import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.wahaha.mihook.utils.MiUIInfo;
+import com.wahaha.mihook.utils.SystemProperty;
 
 public class MainActivity extends AppCompatActivity {
-
-
-    private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
-    private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
-    private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
 
 
     @Override
@@ -33,18 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
-            System.out.println(prop.getProperty(KEY_MIUI_VERSION_CODE, null));
-            System.out.println(prop.getProperty(KEY_MIUI_VERSION_NAME, null));
-            System.out.println(prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
