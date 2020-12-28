@@ -1,5 +1,6 @@
 package com.wahaha.mihook;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,30 +53,52 @@ public class MainHook implements IXposedHookLoadPackage {
     }
 
     private void miui11UsbInstall(ClassLoader classLoader) {
-        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallVerifyActivity", classLoader, "onCreate", android.os.Bundle.class, new XC_MethodReplacement() {
+        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallVerifyActivity", classLoader, "aCE", new XC_MethodReplacement() {
             @Override
             protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
-                XposedHelpers.callMethod(param.thisObject, "setEnabled", true);
                 return null;
+            }
+        });
+        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallVerifyActivity", classLoader, "onCreate", android.os.Bundle.class, new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                XposedHelpers.callMethod(param.thisObject, "setEnabled", true);
+                XposedHelpers.callMethod(param.thisObject, "finish");
+            }
+        });
+        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallActivity", classLoader, "onCreate", android.os.Bundle.class, new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                XposedHelpers.callMethod(param.thisObject, "onClick", new Class[]{DialogInterface.class, int.class}, null, -2);
+                XposedHelpers.callMethod(param.thisObject, "finish");
             }
         });
     }
 
     private void miui12UsbInstall(ClassLoader classLoader) {
-        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallVerifyActivity", classLoader, "onCreate", android.os.Bundle.class, new XC_MethodReplacement() {
+        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallVerifyActivity", classLoader, "b", new XC_MethodReplacement() {
             @Override
             protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
-                XposedHelpers.callMethod(param.thisObject, "a", true);
                 return null;
             }
         });
-        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallActivity", classLoader, "onCreate", android.os.Bundle.class, new XC_MethodReplacement() {
+        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallVerifyActivity", classLoader, "onCreate", android.os.Bundle.class, new XC_MethodHook() {
             @Override
-            protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
-                XposedHelpers.callMethod(param.thisObject, "onCreate", param.args[0]);
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                XposedHelpers.callMethod(param.thisObject, "a", true);
+                XposedHelpers.callMethod(param.thisObject, "finish");
+            }
+        });
+
+        XposedHelpers.findAndHookMethod("com.miui.permcenter.install.AdbInstallActivity", classLoader, "onCreate", android.os.Bundle.class, new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
                 XposedHelpers.callMethod(param.thisObject, "onClick", new Class[]{DialogInterface.class, int.class}, null, -2);
                 XposedHelpers.callMethod(param.thisObject, "finish");
-                return null;
             }
         });
     }
