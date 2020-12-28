@@ -4,7 +4,8 @@
     package="com.wahaha.mihook">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
 
     <application
@@ -20,7 +21,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="MiUI系统功能修改【开启USB安装无须登录，开启USB安装无须SIM卡，开启USB安装默认成功】，支持MiUI11，MiUI12。" />
+            android:value="MiUI系统功能修改【开启USB安装无须登录，开启USB安装无须SIM卡,开启USB安装无须网络，开启USB安装默认成功】，支持MiUI11，MiUI12（miui11:mi5x测试成功，miui12:mix2s测试成功）。" />
         <meta-data
             android:name="xposedminversion"
             android:value="30" />

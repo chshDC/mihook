@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.wahaha.mihook.utils.MiUIInfo;
+import com.wahaha.mihook.utils.RuntimeParam;
 
 public class FirstFragment extends Fragment {
 
@@ -24,9 +25,14 @@ public class FirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView miuiVersionTextView = view.findViewById(R.id.miui_version);
-
+        TextView xposedStatusTextView = view.findViewById(R.id.xposed_status);
         if (MiUIInfo.isMiUI(getContext())) {
             miuiVersionTextView.setText(getString(R.string.miui_version, MiUIInfo.getMiUIVersion(getContext())));
+        }
+        if (RuntimeParam.XposedIsActive) {
+            xposedStatusTextView.setText(getString(R.string.xposed_status, "已激活"));
+        } else {
+            xposedStatusTextView.setText(getString(R.string.xposed_status, "未激活"));
         }
 
 
